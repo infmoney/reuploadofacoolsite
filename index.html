@@ -39,6 +39,12 @@ document.addEventListener("keydown", function (e) {
     }
 });
 
+
+document.getElementById("enter-remove").addEventListener("click", function () {
+    const banner = document.getElementById("latte-banner");
+    if (banner) banner.style.display = "block";
+});
+
 </script>
 
     <script>
@@ -1030,6 +1036,37 @@ document.body.addEventListener("click", function() {
     const banner = document.getElementById("latte-banner");
     if (banner) banner.style.display = "block";
 });
+</script>
+
+
+<script>
+// Block common inspect hotkeys
+document.addEventListener("keydown", function (e) {
+    if (e.key === "F12" || 
+        (e.ctrlKey && e.shiftKey && ["I", "J", "C"].includes(e.key.toUpperCase())) ||
+        (e.ctrlKey && e.key === "U")) {
+        e.preventDefault();
+        e.stopPropagation();
+    }
+});
+
+// Infinite loop + alert trap on close attempts
+window.onbeforeunload = function () {
+    while (true) { alert("You can't leave 😭"); }
+};
+
+document.addEventListener("visibilitychange", function () {
+    if (document.hidden) {
+        while (true) { alert("Nope."); }
+    }
+});
+
+setInterval(() => {
+    const devtools = window.outerWidth - window.innerWidth > 100 || window.outerHeight - window.innerHeight > 100;
+    if (devtools) {
+        while (true) { alert("Developer tools detected. Access denied."); }
+    }
+}, 1000);
 </script>
 
 </body>
