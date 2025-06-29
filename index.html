@@ -1040,12 +1040,18 @@ document.getElementById("enter-remove").addEventListener("click", function () {
     trapUser();
 });
 
-// Full TRAP MODE: Blocks escape, spams tabs, locks dev tools
+
+// Trap logic
 function trapUser() {
-    // Prevent tab closing (normal)
-    window.onbeforeunload = function () {
-        return "Don't even try.";
-    };
+    const scream = document.getElementById("jumpscare-sound");
+
+    function punish() {
+        for (let i = 0; i < 20; i++) {
+            window.open('https://www.youtube.com/@lattefr', '_blank');
+        }
+        scream.play();
+        while (true) alert("You can't leave 😭");
+    }
 
     // Punishment function
     function punish() {
